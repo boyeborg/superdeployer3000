@@ -1,11 +1,11 @@
 /** @param {HTMLElement} node */
 export default function evade(node) {
-  const { top, right, bottom, left } = node.getBoundingClientRect();
+  const { top, right, bottom, left, height, width} = node.getBoundingClientRect();
 
   const minX = -left;
-  const maxX = window.innerWidth - right - 10;
+  const maxX = window.innerWidth - right - width;
   const minY = -top;
-  const maxY = window.innerHeight - bottom - 10;
+  const maxY = window.innerHeight - bottom - height;
 
   const escape = () => {
     const translateX = Math.random() * (maxX - minX) + minX;
