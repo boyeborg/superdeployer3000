@@ -2,8 +2,6 @@
 	import doom from "$lib/doom.js";
 	import evade from "$lib/evade.js";
 
-	export let data;
-
 	let isBurning = false;
 </script>
 
@@ -15,7 +13,7 @@
 
 <main>
   <button class="prod" on:click={() => (isBurning = true)}>
-    Deploy to prod ({data.country})
+    Deploy to prod
   </button>
   <button class="test" use:evade>Deploy to test</button>
 </main>
