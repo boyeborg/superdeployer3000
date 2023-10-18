@@ -2,41 +2,50 @@
 	import doom from "$lib/doom.js";
 	import evade from "$lib/evade.js";
 
-	let isBurning = false;
+	let burning = false;
+	let shaking = false;
 </script>
 
-<svelte:body style:background-color="red" />
-
-<header class:shake={isBurning}>
-  <img alt="Super Deployer 3000" src="/logo.gif" />
+<header class:shake={shaking && !burning}>
+	<img alt="Super Deployer 3000" src="/logo.gif" />
 </header>
 
 <main>
-  <button class="prod" on:click={() => (isBurning = true)}>
-    Deploy to prod
-  </button>
-  <button class="test" use:evade>Deploy to test</button>
+	{#if !burning}
+		<button
+			class="prod"
+			on:click={() => (burning = true)}
+			on:mouseover={() => (shaking = true)}
+			on:focus={() => (shaking = true)}
+			on:blur={() => (shaking = false)}
+			on:mouseout={() => (shaking = false)}
+		>
+			Deploy to prod
+		</button>
+		<button class="test" use:evade>Deploy to test</button>
+	{/if}
 </main>
 
-<div class="fire" use:doom={isBurning} />
-
+<div class="fire" use:doom={burning} />
 
 <style>
-  header {
-    display: flex;
-    justify-content: center;
-    margin-block: 2rem;
-  }
+	header {
+		display: flex;
+		justify-content: center;
+		margin-block: 2rem 6rem;
+	}
 
-  header > img {
-    max-width: 100%;
-  }
+	header > img {
+		width: 100%;
+		max-width: 1000px;
+	}
 
-  main {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-  }
+	main {
+		display: flex;
+		flex-direction: column;
+		gap: 2.5rem;
+		align-items: center;
+	}
 
 	button {
 		font-family: monospace;
@@ -51,13 +60,13 @@
 		font-size: 1.5rem;
 		padding: 0.5rem;
 		text-transform: uppercase;
-		width: auto;
+		width: max-content;
 		outline: none;
 	}
 
 	button.test {
 		background: #0b8728;
-    position: relative;
+		position: relative;
 	}
 
 	button.test:focus,
@@ -78,7 +87,7 @@
 		position: fixed;
 		inset: 0;
 		z-index: -1;
-    background-color: black;
+		background-color: black;
 	}
 
 	.shake {
